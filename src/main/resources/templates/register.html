@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="el">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - College To-Do</title>
+    <div th:replace="~{fragments :: header-css}"></div>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-md-5 col-lg-4">
+            <div class="card shadow-lg border-0">
+                <div class="card-header text-center py-4">
+                    <i class="bi bi-person-plus-fill display-4 mb-2" style="color: var(--rose-primary);"></i>
+                    <h3 class="mb-0">Create Account</h3>
+                    <small class="text-light opacity-75">Start organizing your student life</small>
+                </div>
+
+                <div class="card-body p-4">
+                    <div th:if="${param.error}" class="alert alert-danger border-0 shadow-sm mb-4"
+                         style="background-color: #ffebee; color: #c62828;">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Registration failed. Please try again.
+                    </div>
+
+                    <form th:action="@{/register}" th:object="${user}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold" style="color: var(--slate-pro);">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-person-badge"></i></span>
+                                <input type="text" th:field="*{username}" class="form-control border-start-0 bg-light"
+                                       placeholder="Choose a username" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold" style="color: var(--slate-pro);">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-shield-lock"></i></span>
+                                <input type="password" th:field="*{password}" class="form-control border-start-0 bg-light"
+                                       placeholder="Create a strong password" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-2 shadow">
+                            <i class="bi bi-person-check me-2"></i>Create Account
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted small">Already registered?
+                            <a th:href="@{/login}" class="fw-bold text-decoration-none" style="color: var(--rose-accent);">Sign in here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - College To-Do</title>
+    <div th:replace="~{fragments :: header-css}"></div>
+</head>
+<body class="bg-light">
+<div th:replace="~{fragments :: navbar}"></div>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Welcome back, <span th:text="${#authentication.name}">Student</span>!</h2>
+        <a th:href="@{/tasks/new}" class="btn btn-primary shadow-sm">+ New Task</a>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-white border-0 shadow-sm text-center p-3">
+                <h6 class="text-muted">Pending Tasks</h6>
+                <h2 class="text-primary mb-0" th:text="${totalPending}">0</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-white border-0 shadow-sm text-center p-3">
+                <h6 class="text-muted">High Priority</h6>
+                <h2 class="text-danger mb-0" th:text="${highPriority}">0</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-white border-0 shadow-sm text-center p-3">
+                <h6 class="text-muted">Due Today</h6>
+                <h2 class="text-warning mb-0" th:text="${dueToday}">0</h2>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-white border-0 shadow-sm text-center p-3">
+                <h6 class="text-muted">Completed</h6>
+                <h2 class="text-success mb-0" th:text="${completedToday}">0</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4 border-0 shadow-sm">
+        <div class="card-body">
+            <form th:action="@{/tasks}" method="get" class="row g-2">
+                <div class="col-md-5">
+                    <input type="text" name="category" th:value="${category}" class="form-control" placeholder="Search by Category...">
+                </div>
+                <div class="col-md-4">
+                    <input type="date" name="dueDate" th:value="${dueDate}" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-dark w-100">Apply Filters</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                <tr>
+                    <th>Status</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Deadline</th>
+                    <th>Priority</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="task : ${tasks}" th:classappend="${task.completed} ? 'opacity-75' : ''">
+                    <td>
+                        <a th:href="@{/tasks/toggle/{id}(id=${task.id})}" class="text-decoration-none">
+                            <span th:if="${task.completed}" class="badge rounded-pill bg-success">Done</span>
+                            <span th:unless="${task.completed}" class="badge rounded-pill bg-warning text-dark">Pending</span>
+                        </a>
+                    </td>
+                    <td>
+                        <span th:text="${task.title}" th:style="${task.completed} ? 'text-decoration: line-through;' : ''"></span>
+                        <small th:if="${task.description}" class="d-block text-muted" th:text="${task.description}"></small>
+                    </td>
+                    <td th:text="${task.category}"></td>
+                    <td th:text="${task.dueDate}"></td>
+                    <td>
+                        <span th:text="${task.priority}"
+                              th:classappend="${task.priority == 'High'} ? 'badge bg-danger' : 'badge bg-secondary'"></span>
+                    </td>
+                    <td class="text-end">
+                        <a th:href="@{/tasks/delete/{id}(id=${task.id})}"
+                           class="btn btn-sm btn-outline-danger border-0"
+                           onclick="return confirm('Delete this task?')">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(tasks)}">
+                    <td colspan="6" class="text-center py-5 text-muted">
+                        No tasks found. Start by adding a new one!
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

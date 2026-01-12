@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Task - College To-Do</title>
+    <div th:replace="~{fragments :: header-css}"></div>
+</head>
+<body class="bg-light">
+<div th:replace="~{fragments :: navbar}"></div>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white py-3">
+                    <h4 class="mb-0">Task Details</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form th:action="@{/tasks}" th:object="${task}" method="post">
+                        <input type="hidden" th:field="*{id}" />
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Title</label>
+                            <input type="text" th:field="*{title}" class="form-control" required placeholder="e.g. Study for SWE6002">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description</label>
+                            <textarea th:field="*{description}" class="form-control" rows="3" placeholder="Enter task details..."></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Due Date</label>
+                                <input type="date" th:field="*{dueDate}" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">Priority</label>
+                                <select th:field="*{priority}" class="form-select">
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Category</label>
+                            <input type="text" th:field="*{category}" class="form-control" placeholder="e.g. Academic, Personal">
+                        </div>
+
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" th:field="*{completed}" class="form-check-input" id="completedCheck">
+                            <label class="form-check-label" for="completedCheck">Mark as Completed</label>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success px-4">Save Task</button>
+                            <a th:href="@{/tasks}" class="btn btn-outline-secondary px-4">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

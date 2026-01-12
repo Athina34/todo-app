@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="el">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - College To-Do</title>
+    <div th:replace="~{fragments :: header-css}"></div>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-md-5 col-lg-4">
+            <div class="card shadow-lg border-0">
+                <div class="card-header text-center py-4">
+                    <i class="bi bi-person-heart display-4 mb-2" style="color: var(--rose-primary);"></i>
+                    <h3 class="mb-0">Student Login</h3>
+                </div>
+                <div class="card-body p-4">
+
+                    <div th:if="${param.error}" class="alert alert-danger border-0 shadow-sm mb-4"
+                         style="background-color: #ffebee; color: #c62828;">
+                        <i class="bi bi-exclamation-circle me-2"></i>Λάθος όνομα χρήστη ή κωδικός.
+                    </div>
+                    <div th:if="${param.logout}" class="alert alert-info border-0 shadow-sm mb-4"
+                         style="background-color: #e3f2fd; color: #1565c0;">
+                        <i class="bi bi-info-circle me-2"></i>Αποσυνδεθήκατε με επιτυχία.
+                    </div>
+
+                    <form th:action="@{/login}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold" style="color: var(--slate-pro);">Username</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-person"></i></span>
+                                <input type="text" name="username" class="form-control border-start-0 bg-light"
+                                       placeholder="π.χ. Athina" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold" style="color: var(--slate-pro);">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock"></i></span>
+                                <input type="password" name="password" class="form-control border-start-0 bg-light"
+                                       placeholder="Your secret password" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 py-2 shadow">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="text-muted small">New student?
+                            <a th:href="@{/register}" class="fw-bold text-decoration-none" style="color: var(--rose-accent);">Register here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
